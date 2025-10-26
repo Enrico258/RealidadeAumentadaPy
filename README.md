@@ -20,6 +20,7 @@ Dentro da biblioteca openCV há a função projectPoints(), que recebe pontos 3D
 Os eixos ajudam a visualizar a orientação do objeto no espaço
 
 <img width="640" height="480" alt="image" src="https://github.com/user-attachments/assets/f49f1737-5dac-4d46-ba16-8168a5bfd60f" />
+
 Fonte da imagem: [OpenCV Documentation](https://docs.opencv.org/4.x/d5/dae/tutorial_aruco_detection.html)
 
 
