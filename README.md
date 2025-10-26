@@ -262,3 +262,8 @@ def main():
 if __name__ == "__main__":
     main()
 ```
+# Documentos e fontes:
+
+https://www.edmundoptics.com/knowledge-center/application-notes/imaging/understanding-focal-length-and-field-of-view/
+https://chev.me/arucogen/
+https://docs.opencv.org/4.x/d5/dae/tutorial_aruco_detection.html
