@@ -40,12 +40,12 @@ Para uma iteração ao vivo com o objeto permitindo que ele se mova constantemen
 
 ```bash
 while True:
-        ok, frame = cap.read()
+        ok, frame = cap.read() #Entrada de dados em tempo real
         if not ok:
             break
 
-        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-        corners, ids, _ = detect(gray, dictionary)
+        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY) #Conversão para cinza
+        corners, ids, _ = detect(gray, dictionary) # Identifica marcadores e seus vértices
 
         if ids is not None and len(ids) > 0:
             # desenha contornos
@@ -58,12 +58,12 @@ while True:
                 success, rvec, tvec = cv2.solvePnP(objp, imgp, K, dist, flags=cv2.SOLVEPNP_IPPE_SQUARE)
                 if not success:
                     success, rvec, tvec = cv2.solvePnP(objp, imgp, K, dist)
-                if success:
+                if success: # Desenha o cubo e os eixos caso o PnP resulte em sucesso
                     draw_axes(frame, K, dist, rvec, tvec, axis_len=args.axis_scale)
                     draw_cube(frame, K, dist, rvec, tvec, side=args.cube_size)
 
         
-        cv2.imshow("AR ArUco - OpenCV", frame)
+        cv2.imshow("AR ArUco - OpenCV", frame) # Atualiza a visualização
         key = cv2.waitKey(1) & 0xFF
         if key == ord('q'):
             break
