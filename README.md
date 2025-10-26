@@ -126,12 +126,8 @@ def get_aruco_dict(dict_name: str):
 ### 3. Criação do detector de marcadores ArUco
 
 ```bash
-def build_detector(params: dict | None = None):
+def build_detector():
     aruco_params = cv2.aruco.DetectorParameters() if hasattr(cv2.aruco, 'DetectorParameters') else cv2.aruco.DetectorParameters_create()
-    if params:
-        for k, v in params.items():
-            if hasattr(aruco_params, k):
-                setattr(aruco_params, k, v)
     if hasattr(cv2.aruco, 'ArucoDetector'):
         def detect(frame, dictionary):
             detector = cv2.aruco.ArucoDetector(dictionary, aruco_params)
