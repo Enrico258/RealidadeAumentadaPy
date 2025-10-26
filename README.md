@@ -8,6 +8,36 @@
 
 [Eduardo Honorio Friaça - 10408959](https://github.com/EduardoFriaca)
 
+# O que é Realidade Aumentada (RA)
+
+A Realidade Aumentada (RA) combina o mundo real com elementos virtuais.
+
+Ela adiciona objetos 3D, textos ou imagens sobre o ambiente real em tempo real.
+
+Exemplos: filtros do Instagram e jogos como Pokémon GO.
+
+Diferente da Realidade Virtual, a RA não substitui o mundo real — apenas o complementa.
+
+<img width="480" height="365" alt="image" src="https://github.com/user-attachments/assets/ed3c4240-224f-4d48-8a98-c63bbde8e36e" />
+
+# Marcadores ArUco
+
+Os marcadores ArUco são padrões quadrados em preto e branco usados para detectar posições e orientações no espaço.
+
+Cada marcador tem um ID único e faz parte de um dicionário, como DICT_4X4_50.
+
+Eles ajudam a “ancorar” objetos virtuais no mundo real.
+
+<img width="850" height="635" alt="image" src="https://github.com/user-attachments/assets/0faf5c0e-865b-4a98-b194-c5257c9158c0" />
+
+# Detecção dos Cantos do Marcador
+
+Depois de detectar o marcador, o algoritmo encontra os quatro cantos dele.
+
+Esses pontos são usados pra calcular a posição e a orientação da câmera em relação ao marcador.
+
+<img width="640" height="480" alt="image" src="https://github.com/user-attachments/assets/16ee1ff9-a96c-420b-983a-031c07a0ab07" />
+
 # Projeção de Objetos 3D:
 
 A **projeção** é o processo de converter pontos do mundo real (3D) para posições no plano da imagem (2D).
