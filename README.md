@@ -57,18 +57,11 @@ Ela é baseada no **modelo pinhole**, um modelo ideal que considera um único po
 
 A matriz intrínseca pode ser escrita como:
 
-[
-K =
-\begin{bmatrix}
-f_x & 0 & c_x \
-0 & f_y & c_y \
-0 & 0 & 1
-\end{bmatrix}
-]
+<img width="1024" height="346" alt="image" src="https://github.com/user-attachments/assets/ad566d6e-71f8-4673-be6b-75986552b1b1" />
 
----
-
-### Calibração Real vs. Aproximação
+Fonte da imagem: [towardsdatascience](https://towardsdatascience.com/what-are-intrinsic-and-extrinsic-camera-parameters-in-computer-vision-7071b72fb8ec/)
+ 
+## Calibração Real vs. Aproximação
 
 Uma **calibração real** é feita com várias imagens de um padrão conhecido (ex: tabuleiro de xadrez), posicionadas em diferentes ângulos. O procedimento estima automaticamente a matriz **K** e os coeficientes de distorção.
 
@@ -386,3 +379,4 @@ https://learnopencv.com/augmented-reality-using-aruco-markers-in-opencv-c-python
 https://en.wikipedia.org/wiki/Perspective-n-Point
 https://docs.opencv.org/4.x/dc/dbb/tutorial_py_calibration.html
 https://pt.wikipedia.org/wiki/Realidade_aumentada
+https://towardsdatascience.com/what-are-intrinsic-and-extrinsic-camera-parameters-in-computer-vision-7071b72fb8ec/
