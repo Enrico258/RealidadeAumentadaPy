@@ -7,7 +7,7 @@ from pathlib import Path
 import cv2
 import numpy as np
 
-#Sessão aruco
+#Aruco
 def get_aruco_dict(dict_name: str):
     """Resolve o dicionário ArUco a partir de uma string amigável."""
     name = dict_name.strip().upper()
@@ -171,3 +171,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
