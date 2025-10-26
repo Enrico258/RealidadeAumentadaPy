@@ -267,3 +267,6 @@ if __name__ == "__main__":
 https://www.edmundoptics.com/knowledge-center/application-notes/imaging/understanding-focal-length-and-field-of-view/
 https://chev.me/arucogen/
 https://docs.opencv.org/4.x/d5/dae/tutorial_aruco_detection.html
+https://learnopencv.com/augmented-reality-using-aruco-markers-in-opencv-c-python/
+https://en.wikipedia.org/wiki/Perspective-n-Point
+https://docs.opencv.org/4.x/dc/dbb/tutorial_py_calibration.html
