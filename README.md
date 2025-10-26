@@ -300,3 +300,6 @@ https://docs.opencv.org/4.x/d5/dae/tutorial_aruco_detection.html
 https://learnopencv.com/augmented-reality-using-aruco-markers-in-opencv-c-python/
 https://en.wikipedia.org/wiki/Perspective-n-Point
 https://docs.opencv.org/4.x/dc/dbb/tutorial_py_calibration.html
+https://niantic.helpshift.com/hc/pt/6-pokemon-go/faq/28-catching-pokemon-in-ar-mode-1712012768/
+https://www.researchgate.net/figure/DICT-6X6-250-dictionary-of-ArUco-markers_fig9_366600173
+https://pyimagesearch.com/2020/12/21/detecting-aruco-markers-with-opencv-and-python/
