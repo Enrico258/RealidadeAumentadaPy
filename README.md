@@ -8,6 +8,36 @@
 
 [Eduardo Honorio Friaça - 10408959](https://github.com/EduardoFriaca)
 
+# O que é Realidade Aumentada (RA)
+
+A Realidade Aumentada (RA) combina o mundo real com elementos virtuais.
+
+Ela adiciona objetos 3D, textos ou imagens sobre o ambiente real em tempo real.
+
+Exemplos: filtros do Instagram e jogos como Pokémon GO.
+
+Diferente da Realidade Virtual, a RA não substitui o mundo real — apenas o complementa.
+
+<img width="480" height="365" alt="image" src="https://github.com/user-attachments/assets/56026e3b-6929-443a-bf0b-f5b52b13a1ad" />
+
+# Marcadores ArUco
+
+Os marcadores ArUco são padrões quadrados em preto e branco usados para detectar posições e orientações no espaço.
+
+Cada marcador tem um ID único e faz parte de um dicionário, como DICT_4X4_50.
+
+Eles ajudam a “ancorar” objetos virtuais no mundo real.
+
+<img width="850" height="635" alt="image" src="https://github.com/user-attachments/assets/dc8c5409-ea55-445e-afda-0d62fa651f1d" />
+
+# Detecção dos Cantos do Marcador
+
+Depois de detectar o marcador, o algoritmo encontra os quatro cantos dele.
+
+Esses pontos são usados pra calcular a posição e a orientação da câmera em relação ao marcador.
+
+<img width="640" height="480" alt="image" src="https://github.com/user-attachments/assets/4de7745a-a044-4ae9-bc9d-65a88724206b" />
+
 # Projeção de Objetos 3D:
 
 A **projeção** é o processo de converter pontos do mundo real (3D) para posições no plano da imagem (2D).
@@ -267,6 +297,3 @@ if __name__ == "__main__":
 https://www.edmundoptics.com/knowledge-center/application-notes/imaging/understanding-focal-length-and-field-of-view/
 https://chev.me/arucogen/
 https://docs.opencv.org/4.x/d5/dae/tutorial_aruco_detection.html
-https://learnopencv.com/augmented-reality-using-aruco-markers-in-opencv-c-python/
-https://en.wikipedia.org/wiki/Perspective-n-Point
-https://docs.opencv.org/4.x/dc/dbb/tutorial_py_calibration.html
