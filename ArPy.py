@@ -3,7 +3,6 @@ import argparse
 import math
 import time
 from pathlib import Path
-
 import cv2
 import numpy as np
 
@@ -41,12 +40,8 @@ def get_aruco_dict(dict_name: str):
 
 
 #Define o detector aruco
-def build_detector(params: dict | None = None):
+def build_detector():
     aruco_params = cv2.aruco.DetectorParameters() if hasattr(cv2.aruco, 'DetectorParameters') else cv2.aruco.DetectorParameters_create()
-    if params:
-        for k, v in params.items():
-            if hasattr(aruco_params, k):
-                setattr(aruco_params, k, v)
     if hasattr(cv2.aruco, 'ArucoDetector'):
         def detect(frame, dictionary):
             detector = cv2.aruco.ArucoDetector(dictionary, aruco_params)
@@ -171,4 +166,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
