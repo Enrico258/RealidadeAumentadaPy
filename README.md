@@ -34,7 +34,7 @@ Eles mostram como o sistema de coordenadas do marcados está posicionado. Como �
 # Condições para Rastreamento Estável:
 
 - Marcador grande o suficiente: quanto maior o marcador mais pixels disponíveis, menos ruído e mais precisão.
-- Iluminação adequada: aumenta o contraste e facilita no reconehcimento dos padrões ArUco
+- Iluminação adequada: aumenta o contraste e facilita no reconhecimento dos padrões ArUco
 - Foco e resolução da câmera: ajuda na precisão do cubo
 - Calibração para melhor precisão
 
