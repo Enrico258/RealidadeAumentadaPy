@@ -46,32 +46,37 @@ Fonte da imagem: [PyImageSearch](https://pyimagesearch.com/2020/12/21/detecting-
 
 
 
-## 4️Matriz Intrínseca da Câmera
+
+## Matriz Intrínseca da Câmera
 
 A **matriz intrínseca** descreve as características internas da câmera — ou seja, como ela transforma pontos tridimensionais (3D) do mundo real em coordenadas bidimensionais (2D) na imagem capturada.
 Ela é baseada no **modelo pinhole**, um modelo ideal que considera um único ponto de projeção, sem lentes.
 
-### 📐 Modelo de Câmera Pinhole
+### Modelo de Câmera Pinhole
 
-O modelo **pinhole** assume que todos os raios de luz passam por um único ponto e formam a imagem no plano oposto.
-Apesar de simples, esse modelo representa bem o comportamento óptico das câmeras digitais.
+O modelo **pinhole** assume que todos os raios de luz passam por um único ponto e formam a imagem no plano oposto. Apesar de simples, esse modelo representa bem o comportamento óptico das câmeras digitais.
 
-<img width="600" alt="pinhole" src="https://upload.wikimedia.org/wikipedia/commons/0/0c/Pinhole_camera_model.svg">
+![Image](https://upload.wikimedia.org/wikipedia/commons/3/3b/Pinhole-camera.svg)
 
-**Figura:** Representação do modelo de câmera pinhole.
-*Fonte: Wikimedia Commons*
+![Image](https://www.researchgate.net/publication/326717734/figure/fig2/AS%3A654430605156355%401533039823909/Pinhole-camera-model-with-a-point-PX-Y-Z-according-to-the-camera-coordinate-system-and.png)
+
+![Image](https://www.researchgate.net/publication/35152505/figure/fig4/AS%3A336388546416643%401457212687880/Camera-projection-model-The-pinhole-camera-model-is-modified-by-placing-a-virtual-image.png)
+
+![Image](https://i.ytimg.com/vi/_EhY31MSbNM/maxresdefault.jpg)
+
+![Image](https://www.researchgate.net/publication/339068804/figure/fig3/AS%3A855499306192897%401580978337799/Pinhole-camera-model-projection-from-3D-scene-to-2D-image.png)
+
+![Image](https://www.researchgate.net/profile/Luis-Ortiz-25/publication/326518096/figure/fig1/AS%3A650462126698498%401532093664117/Pinhole-Camera-Model-ideal-projection-of-a-3D-object-on-a-2D-image_Q320.jpg)
 
 ---
 
-### ⚙️ Parâmetros Intrínsecos
-
-Os **parâmetros intrínsecos** são obtidos através de calibração e determinam como a câmera projeta o mundo real na imagem:
+###  Parâmetros Intrínsecos
 
 * **Distância focal (f)** → define o campo de visão da câmera
 * **Ponto principal (cₓ, cᵧ)** → centro óptico da imagem
-* **Coeficientes de distorção** → corrigem deformações da lente (radiais e tangenciais)
+* **Coeficientes de distorção** → corrigem deformações introduzidas pela lente (radiais e tangenciais)
 
-A matriz intrínseca tem a forma:
+A matriz intrínseca pode ser escrita como:
 
 [
 K =
@@ -84,14 +89,11 @@ f_x & 0 & c_x \
 
 ---
 
-### 🔧 Calibração Real vs. Aproximação
+### Calibração Real vs. Aproximação
 
-Uma **calibração real** é feita com imagens de um padrão conhecido (ex: tabuleiro de xadrez), posicionadas em diferentes ângulos.
-O OpenCV detecta os cantos e calcula automaticamente a matriz **K** e os coeficientes de distorção.
+Uma **calibração real** é feita com várias imagens de um padrão conhecido (ex: tabuleiro de xadrez), posicionadas em diferentes ângulos. O procedimento estima automaticamente a matriz **K** e os coeficientes de distorção.
 
-Quando não há tempo para calibrar, é possível usar uma **aproximação** — estimando os parâmetros intrínsecos com base na resolução e no campo de visão.
-
-Exemplo em Python:
+Quando não há tempo para isso ou para teste rápido, podemos usar uma **aproximação**, baseado apenas em resolução da câmera e campo de visão estimado.
 
 ```python
 def estimate_intrinsics_approx(w, h, fov_deg=60):
@@ -104,82 +106,77 @@ def estimate_intrinsics_approx(w, h, fov_deg=60):
     return K, dist
 ```
 
-Essa função fornece uma **estimativa inicial aceitável** para testes de realidade aumentada, sem necessidade de calibração precisa.
+![Image](https://raw.githubusercontent.com/LongerVision/OpenCV_Examples/master/markers/pattern_chessboard.png)
 
-<img width="700" alt="calibration" src="https://docs.opencv.org/4.x/calibration_chessboard.png">
+![Image](https://markhedleyjones.com/media/calibration-checkerboard-collection/calibration-checkerboard-collection.svg)
 
-**Figura:** Processo de calibração de câmera com padrão de xadrez.
-*Fonte: OpenCV Documentation*
+![Image](https://markhedleyjones.com/media/calibration-checkerboard-collection/Checkerboard-A3-70mm-4x3.svg)
+
+![Image](https://miro.medium.com/1%2Ag3fTt73p5arXsEWod2wjKQ.png)
+
+**Figura:** Exemplo de padrão de calibração usado em câmeras (tabuleiro de xadrez).
 
 ---
 
 ## Pose Estimation — PnP (Perspective-n-Points)
 
-A **estimativa de pose (Pose Estimation)** define a **posição e a orientação da câmera** em relação a um marcador ou objeto conhecido.
-É a etapa que permite projetar corretamente objetos 3D no ambiente real.
+A **estimativa de pose** define a **posição e a orientação da câmera** em relação a um marcador ou objeto conhecido.
+Esse cálculo permite projetar objetos 3D corretamente no ambiente real.
 
-### 📏 Conceito
+### Conceito
 
-O método **PnP (Perspective-n-Points)** utiliza correspondências entre:
+O método **PnP** usa correspondências entre:
 
-* 4 pontos **3D conhecidos** (por exemplo, os cantos do marcador)
-* 4 pontos **2D detectados** na imagem
+* 4 pontos **3D** conhecidos (por exemplo, os cantos de um marcador)
+* 4 pontos **2D** detectados na imagem
 
-A partir disso, o algoritmo calcula:
+A partir dessas correspondências, o algoritmo estima:
 
-* **rvec (rotation vector)** → rotação da câmera
-* **tvec (translation vector)** → posição da câmera
+* **rvec (rotation vector)** → representa a rotação da câmera
+* **tvec (translation vector)** → representa a translação (posição no espaço)
 
-Esses vetores permitem desenhar eixos e cubos 3D alinhados com o marcador.
+![Image](https://docs.opencv.org/3.4/pnp.jpg)
 
-<img width="700" alt="pnp" src="https://docs.opencv.org/4.x/pnp_pose_estimation.png">
+![Image](https://www.researchgate.net/publication/365104008/figure/fig1/AS%3A11431281094749332%401667567918518/D-pose-estimation-using-Perspective-n-Point-The-network-outputs-nine-keypoints-in-the_Q320.jpg)
 
-**Figura:** Relação entre pontos 3D e 2D na estimação de pose.
-*Fonte: OpenCV Documentation*
+![Image](https://docs.opencv.org/4.x/pnp.jpg)
+
+![Image](https://miro.medium.com/1%2AAtB0mwskGEgQLQqaUy0y0g.jpeg)
+
+![Image](https://www.researchgate.net/publication/251610120/figure/fig1/AS%3A487318046941185%401493197084015/Relationship-between-3D-points-and-the-respective-2D-projections-onto-the-image-plane.png)
+
+![Image](https://www.researchgate.net/publication/340167758/figure/fig1/AS%3A960014806159367%401605896774722/Camera-pose-estimation-from-correspondences-Even-though-the-lighting-is-bad-we-can.png)
 
 ---
 
-### 🧮 Cálculo no OpenCV
+### Cálculo no OpenCV
 
-O cálculo da pose é feito com a função `cv2.solvePnP()`:
+O cálculo de pose é feito via a função:
 
 ```python
 success, rvec, tvec = cv2.solvePnP(objp, imgp, K, dist)
 ```
 
-**Parâmetros:**
+Onde:
 
-* `objp` → coordenadas 3D conhecidas (ex: cantos do marcador)
-* `imgp` → pontos 2D detectados na imagem
+* `objp` → pontos 3D conhecidos
+* `imgp` → correspondentes 2D detectados
 * `K` → matriz intrínseca da câmera
 * `dist` → coeficientes de distorção
 
-Se `success` for verdadeiro, o OpenCV retorna `rvec` e `tvec`, que podem ser usados para desenhar objetos 3D com precisão.
+Se `success` for verdadeiro, temos `rvec` e `tvec` para desenhar eixos ou objetos 3D no marcador.
 
----
 
-### ⚙️ Algoritmos do PnP
 
-| **Algoritmo**          | **Características**                           |
+### Algoritmos do PnP
+
+| Algoritmo              | Características                               |
 | ---------------------- | --------------------------------------------- |
 | `SOLVEPNP_ITERATIVE`   | Método clássico, robusto e preciso            |
-| `SOLVEPNP_P3P`         | Rápido, ideal para 3 pontos                   |
+| `SOLVEPNP_P3P`         | Rápido, ideal para exatamente 3 pontos        |
 | `SOLVEPNP_IPPE_SQUARE` | Recomendado para marcadores quadrados (ArUco) |
 | `SOLVEPNP_AP3P`        | Variante aprimorada para pequenas distâncias  |
 
-Na prática, o mais usado é o `SOLVEPNP_IPPE_SQUARE`, pois fornece bons resultados com marcadores ArUco.
-Caso falhe, o código pode tentar novamente com o método padrão `SOLVEPNP_ITERATIVE`.
-
----
-
-### 🎯 Visualização da Pose
-
-Após calcular `rvec` e `tvec`, o sistema desenha os eixos **(X, Y, Z)** e o **cubo 3D** sobre o marcador, mostrando a orientação e posição no espaço.
-
-<img width="640" height="480" alt="aruco_axes" src="https://github.com/user-attachments/assets/f49f1737-5dac-4d46-ba16-8168a5bfd60f">
-
-**Figura:** Eixos X (vermelho), Y (verde) e Z (azul) desenhados com base nos vetores de pose.
-*Fonte: OpenCV Documentation*
 
 
 # Projeção de Objetos 3D:
