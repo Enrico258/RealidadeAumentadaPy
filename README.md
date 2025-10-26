@@ -19,6 +19,7 @@ Exemplos: filtros do Instagram e jogos como Pokémon GO.
 Diferente da Realidade Virtual, a RA não substitui o mundo real — apenas o complementa.
 
 <img width="480" height="365" alt="image" src="https://github.com/user-attachments/assets/4fe93825-72c0-42a9-b11b-cd458375b8fc" />
+
 Fonte da imagem: [Niantic Help Center] (https://niantic.helpshift.com/hc/pt/6-pokemon-go/faq/28-catching-pokemon-in-ar-mode-1712012768/)
 
 # Marcadores ArUco
@@ -30,6 +31,7 @@ Cada marcador tem um ID único e faz parte de um dicionário, como DICT_4X4_50.
 Eles ajudam a “ancorar” objetos virtuais no mundo real.
 
 <img width="850" height="635" alt="image" src="https://github.com/user-attachments/assets/98749c4f-22e5-4527-98db-cc34b33ec380" />
+
 Fonte da imagem: [ResearchGate] (https://www.researchgate.net/figure/DICT-6X6-250-dictionary-of-ArUco-markers_fig9_366600173)
 
 # Detecção dos Cantos do Marcador
@@ -39,6 +41,7 @@ Depois de detectar o marcador, o algoritmo encontra os quatro cantos dele.
 Esses pontos são usados pra calcular a posição e a orientação da câmera em relação ao marcador.
 
 <img width="700" height="518" alt="image" src="https://github.com/user-attachments/assets/a2e3fbaf-8a50-4036-8f38-166b6d2761b5" />
+
 Fonte da imagem: [PyImageSearch] (https://pyimagesearch.com/2020/12/21/detecting-aruco-markers-with-opencv-and-python/)
 
 # Projeção de Objetos 3D:
