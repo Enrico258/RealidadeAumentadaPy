@@ -52,8 +52,6 @@ while True:
             cv2.aruco.drawDetectedMarkers(frame, corners, ids)
             for c in corners:
                 c = c.reshape(4, 2).astype(np.float32)
-                # solvePnP precisa de correspondência 2D-3D coerente
-                # Convenção: canto 0 -> (0,0), 1 -> (L,0), 2 -> (L,L), 3 -> (0,L)
                 imgp = c
                 success, rvec, tvec = cv2.solvePnP(objp, imgp, K, dist, flags=cv2.SOLVEPNP_IPPE_SQUARE)
                 if not success:
