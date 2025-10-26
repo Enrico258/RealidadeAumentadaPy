@@ -8,6 +8,66 @@
 
 [Eduardo Honorio Friaça - 10408959](https://github.com/EduardoFriaca)
 
+# Projeção de Objetos 3D:
+
+A **projeção** é o processo de converter pontos do mundo real (3D) para posições no plano da imagem (2D).
+
+A conversão utiliza os parâmetros da câmera (intrínsecos e extrínsecos), obtidos normalmente no processo de calibração.
+
+Dentro da biblioteca openCV há a função projectPoints(), que recebe pontos 3D do objeto, posição e orientação da câmera, parâmetros intrínsecos e coeficientes de distorção. Então retornando as coordenadas 2D projetadas na imagem.
+
+**Desenho de eixos (X, Y, Z):**
+Os eixos ajudam a visualizar a orientação do objeto no espaço
+
+<img width="640" height="480" alt="image" src="https://github.com/user-attachments/assets/f49f1737-5dac-4d46-ba16-8168a5bfd60f" />
+
+Eles mostram como o sistema de coordenadas do marcados está posicionado. Como é possível ver na imagem, os eixos se diferem, pois os marcadores não estão orientados igualmente.
+
+**Desenho do cubo:**
+1. Definir os 8 vértices de um cubo em coordenadas 3D
+2. Projetar esses pontos com a função projectPoints()
+3. Conectar as arestas com linhas na imagem
+
+# Condições para Rastreamento Estável:
+
+- Marcador grande o suficiente: quanto maior o marcador mais pixels disponíveis, menos ruído e mais precisão.
+- Iluminação adequada: aumenta o contraste e facilita no reconehcimento dos padrões ArUco
+- Foco e resolução da câmera: ajuda na precisão do cubo
+- Calibração para melhor precisão
+
+# Interação em Tempo Real:
+Para uma iteração ao vivo com o objeto permitindo que ele se mova constantemente conforme a câmera ou o marcador se movem é necessário definir um loop de aquisição de imagem. Como será mostrado na implementação, esse loop está presente na main:
+
+```bash
+while True:
+        ok, frame = cap.read()
+        if not ok:
+            break
+
+        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+        corners, ids, _ = detect(gray, dictionary)
+
+        if ids is not None and len(ids) > 0:
+            # desenha contornos
+            cv2.aruco.drawDetectedMarkers(frame, corners, ids)
+            for c in corners:
+                c = c.reshape(4, 2).astype(np.float32)
+                # solvePnP precisa de correspondência 2D-3D coerente
+                # Convenção: canto 0 -> (0,0), 1 -> (L,0), 2 -> (L,L), 3 -> (0,L)
+                imgp = c
+                success, rvec, tvec = cv2.solvePnP(objp, imgp, K, dist, flags=cv2.SOLVEPNP_IPPE_SQUARE)
+                if not success:
+                    success, rvec, tvec = cv2.solvePnP(objp, imgp, K, dist)
+                if success:
+                    draw_axes(frame, K, dist, rvec, tvec, axis_len=args.axis_scale)
+                    draw_cube(frame, K, dist, rvec, tvec, side=args.cube_size)
+
+        
+        cv2.imshow("AR ArUco - OpenCV", frame)
+        key = cv2.waitKey(1) & 0xFF
+        if key == ord('q'):
+            break
+```
 
 # Implementação prática:
 
