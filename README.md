@@ -38,6 +38,9 @@ Eles mostram como o sistema de coordenadas do marcados está posicionado. Como �
 - Foco e resolução da câmera: ajuda na precisão do cubo
 - Calibração para melhor precisão
 
+<img width="952" height="698" alt="image" src="https://github.com/user-attachments/assets/09d670f6-263e-4d6f-9b84-a8eb8d49740d" />
+
+
 # Interação em Tempo Real:
 Para uma iteração ao vivo com o objeto permitindo que ele se mova constantemente conforme a câmera ou o marcador se movem é necessário definir um loop de aquisição de imagem. Como será mostrado na implementação, esse loop está presente na main:
 
