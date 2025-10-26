@@ -32,7 +32,7 @@ Eles ajudam a “ancorar” objetos virtuais no mundo real.
 
 <img width="850" height="635" alt="image" src="https://github.com/user-attachments/assets/98749c4f-22e5-4527-98db-cc34b33ec380" />
 
-Fonte da imagem: [ResearchGate] (https://www.researchgate.net/figure/DICT-6X6-250-dictionary-of-ArUco-markers_fig9_366600173)
+Fonte da imagem: [ResearchGate](https://www.researchgate.net/figure/DICT-6X6-250-dictionary-of-ArUco-markers_fig9_366600173)
 
 # Detecção dos Cantos do Marcador
 
