@@ -235,7 +235,8 @@ def get_aruco_dict(dict_name: str):
 
 ```bash
 def build_detector():
-    aruco_params = cv2.aruco.DetectorParameters() if hasattr(cv2.aruco, 'DetectorParameters') else cv2.aruco.DetectorParameters_create()
+    # Cria parâmetros de detecção ArUco usando a API compatível
+    aruco_params = cv2.aruco.DetectorParameters() if hasattr(cv2.aruco, 'DetectorParameters') else cv2.aruco.DetectorParameters_create()  # Varia dependendo da versão
     if hasattr(cv2.aruco, 'ArucoDetector'):
         def detect(frame, dictionary):
             detector = cv2.aruco.ArucoDetector(dictionary, aruco_params)
@@ -243,10 +244,13 @@ def build_detector():
             return corners, ids, rejected
         return detect
     else:
+        # API antiga (detectMarkers função global)
         def detect(frame, dictionary):
             return cv2.aruco.detectMarkers(frame, dictionary, parameters=aruco_params)
         return detect
 ```
+
+
 
 ### 4. Estimador de calibração de webcam
 
@@ -264,9 +268,12 @@ def estimate_intrinsics_approx(w: int, h: int, fov_deg: float = 60.0):
 ```bash
 def draw_axes(img, K, dist, rvec, tvec, axis_len=0.03):
     # Eixos X (vermelho), Y (verde), Z (azul) — cores padrão do OpenCV
+    # Define os 4 pontos no espaço 3D:
     axis = np.float32([[0,0,0],[axis_len,0,0],[0,axis_len,0],[0,0,axis_len]]).reshape(-1,3)
-    imgpts, _ = cv2.projectPoints(axis, rvec, tvec, K, dist)
-    p0, px, py, pz = [tuple(pt.ravel().astype(int)) for pt in imgpts]
+    imgpts, _ = cv2.projectPoints(axis, rvec, tvec, K, dist) # Projeta os pontos 3D para coordenadas 2D da imagem
+    p0, px, py, pz = [tuple(pt.ravel().astype(int)) for pt in imgpts] # Converte os pontos projetados para tuplas de pixel
+
+    # Desenha eixos
     cv2.line(img, p0, px, (0,0,255), 2)
     cv2.line(img, p0, py, (0,255,0), 2)
     cv2.line(img, p0, pz, (255,0,0), 2)
@@ -283,14 +290,18 @@ def draw_cube(img, K, dist, rvec, tvec, side=0.05):
         [0, 0, 0], [s, 0, 0], [s, s, 0], [0, s, 0],  
         [0, 0, -s], [s, 0, -s], [s, s, -s], [0, s, -s]
     ])
+
+    # Projeta os pontos 3D em coordenadas 2D da imagem
     imgpts, _ = cv2.projectPoints(objp, rvec, tvec, K, dist)
     imgpts = imgpts.reshape(-1, 2).astype(int)
 
-    # base
+    # Desenha o quadrado da base (percorrendo os pontos 0-3)
     cv2.polylines(img, [imgpts[0:4]], True, (255, 255, 255), 2)
+
     # pilares
     for i in range(4):
         cv2.line(img, tuple(imgpts[i]), tuple(imgpts[i+4]), (200, 200, 200), 2)
+
     # topo
     cv2.polylines(img, [imgpts[4:8]], True, (160, 160, 160), 2)
 ```
